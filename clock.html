@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="300"></canvas>
+</body>
+<script>
+
+function clock(){
+	 var canvas=document.getElementById("canvas");
+	var context=canvas.getContext('2d');
+	context.clearRect(0,0,canvas.width,canvas.height);
+	context.save();	
+	context.beginPath();
+	context.arc(canvas.width/2,canvas.height/2,80,0,2*Math.PI,true);
+	
+	
+	context.lineWidth=15;
+	var clg=context.createLinearGradient(0, 0, 0, canvas.height);
+	clg.addColorStop(0,"black");
+	clg.addColorStop(1,"#999");
+	context.fillStyle=clg;   	//填充颜色
+	context.strokeStyle="#ccc";  	//描边颜色
+	context.stroke();	
+	context.fill();             	 //填充
+	context.save();
+	context.beginPath();
+	context.lineWidth=3;
+	context.translate(canvas.width/2,canvas.height/2);
+	context.rotate(-Math.PI/2);   
+	context.scale(0.6,0.6);
+	context.save();
+	for(var i = 1;i<=12;i++){
+		context.beginPath();
+		context.moveTo(100,0);
+		context.lineTo(120,0);		
+		context.stroke();
+		context.font="18px 微软雅黑";
+		context.textAlign="";
+		context.textBaseline="bottom";
+		context.fillText(i,70,50);
+		context.fillStyle="#fff";
+		context.closePath();
+		context.rotate(Math.PI/6);
+		
+	}
+	
+	context.restore(); 
+	
+    context.save();
+    context.lineWidth=5;
+    for(var i=0;i<60;i++){
+    	if(i%5!=0){
+    	context.beginPath();
+    	context.moveTo(110,0);
+    	context.lineTo(120,0);
+    	context.stroke();
+    	
+    	}
+    	context.rotate(Math.PI/30);
+    }
+    context.restore();
+    context.fillStyle="red";
+    context.save();
+    var data=new Date();
+    var hour=data.getHours()>12 ? data.getHours()-12 : data.getHours();
+    var minutes=data.getMinutes();
+    var seconds=data.getSeconds();
+    context.lineWidth=10;
+    context.rotate( hour*(Math.PI/6) + (Math.PI/360)*minutes + (Math.PI/21600)*seconds );
+    context.beginPath();
+    context.moveTo(-10,0);
+    context.lineTo(60,0);
+    context.stroke();
+    context.restore();
+    context.save();
+    context.rotate(Math.PI/30*minutes+Math.PI/1800*seconds);
+    context.lineWidth=7;
+    context.moveTo(-10,0);
+    context.lineTo(70,0);
+    context.stroke();
+    context.restore();
+    context.save();
+    context.rotate(seconds*Math.PI/30);
+    context.lineWidth=5;
+    context.moveTo(-10,0);
+    context.lineTo(80,0);
+    context.stroke();
+}
+clock();
+//window.requestAnimationFrame(clock);
+//setInterval(clock,1000);
+</script>
+</html>
